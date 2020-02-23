@@ -3,6 +3,11 @@
 #TUFTS UNIV, 2019-11-24
 #----------------------------------------------------------------------
 
+
+
+#PARTS OF THE SCRIPT HAS BEEN MODIFIED FOR PRIVACY AND SECURITY REASONS
+
+
 #import libraries
 import pandas as pd
 import re
@@ -11,7 +16,7 @@ from bs4 import BeautifulSoup
 
 
 #create a table to hold all useful data:
-page=requests.get('http://www.espn.com/mlb/history/leaders/_/breakdown/season/year/2019')
+page=requests.get('******************************')
 content= BeautifulSoup(page.text,'html.parser')
 header = content.find('tr',attrs={'class':'colhead'})
 columns = [col.get_text() for col in header.find_all('td')]
@@ -19,7 +24,7 @@ table = pd.DataFrame(columns=columns)
 
 #get the page
 for i in range(1,331,50):
-    page = requests.get('http://www.espn.com/mlb/history/leaders/_/breakdown/season/year/2019/start/{}'.format(i))
+    page = requests.get('*********************************'.format(i))
 
 #load the page text
     content = BeautifulSoup(page.text,'html.parser')
@@ -27,7 +32,7 @@ for i in range(1,331,50):
 #    columns = [col.get_text() for col in header.find_all('td')]
 
 #get all players
-    players = content.find_all('tr', attrs={'class':re.compile('row player-10-')})
+    players = content.find_all('tr', attrs={'class':re.compile('*********')})
 
     for p in players:
         value = [stat.get_text() for stat in p.find_all('td')]
@@ -36,7 +41,7 @@ for i in range(1,331,50):
         table = pd.concat([table,df],ignore_index = True)
     
 #write out the table into csv for future use
-table.to_csv(r'C:\Users\bohen\Desktop\US\TUFTS\TUFTS\Academic\DATA 201B\project\PlayerData.csv', index=False, encoding='utf-8')
+table.to_csv(r'**********************************', index=False, encoding='utf-8')
 
 #get the summary statistics
 import statistics as st
@@ -51,7 +56,7 @@ for v in range(len(Var)):
     sumtab.loc[v] = [ Var[v], min(raw[Var[v]]),st.mean(raw[Var[v]]),max(raw[Var[v]]),st.stdev(raw[Var[v]])]
 
 #write out the table into csv for submission
-sumtab.to_csv(r'C:\Users\bohen\Desktop\US\TUFTS\TUFTS\Academic\DATA 201B\project\SummaryStatistics.csv', index=False, encoding='utf-8')
+sumtab.to_csv(r'******************************', index=False, encoding='utf-8')
 
 #suppose we want to see if there is relation between BA, and R(run), and H(hit)
 BA_HandR = raw.plot.scatter(x='R', y='BA',c='H')
